@@ -5,7 +5,7 @@ pipeline {
         KUBECONFIG = "/home/devipriya/.kube/config"
         IMAGE_NAME = "python-cicd-app"
         NOTIFY_EMAIL = "G.Devipriya@Xoriant.Com"
-        //CC_EMAILS = "team1@company.com,team2@company.com"
+        CC_EMAILS = "Ashish.Kamath@Xoriant.Com"
         MAIN_BRANCH = "main"
         LOCAL_PORT = "5005"  // local port for port-forward
         POD_NAME = ""         // will be set dynamically
@@ -82,7 +82,7 @@ pipeline {
             steps {
                 emailext(
                     to: "${NOTIFY_EMAIL}",
-                    //cc: "${CC_EMAILS}",
+                    cc: "${CC_EMAILS}",
                     subject: "Daily Main Branch Pod Health Report",
                     body: """
                     <p>Hello Team,</p>
