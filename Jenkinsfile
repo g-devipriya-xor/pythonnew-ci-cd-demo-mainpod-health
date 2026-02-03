@@ -81,8 +81,7 @@ pipeline {
         stage('Send Email Report') {
             steps {
                 emailext(
-                    to: "${NOTIFY_EMAIL}",
-                    cc: "${CC_EMAILS}",
+                    to: "${NOTIFY_EMAIL},${CC_EMAILS}",
                     subject: "Daily Main Branch Pod Health Report",
                     body: """
                     <p>Hello Team,</p>
