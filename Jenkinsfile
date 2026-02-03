@@ -51,7 +51,7 @@ pipeline {
                     ).trim()
 		    // Get /status endpoint status
 		    def appStatusEndpoint = sh(
-			script: "curl -s http://localhost:5001/status",
+			script: "curl -s http://localhost:5005/status",
 			returnStdout: true
 		    ).trim()
 
