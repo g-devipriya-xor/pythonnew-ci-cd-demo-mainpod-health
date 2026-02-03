@@ -44,9 +44,9 @@ pipeline {
                     sleep 5  # give it some time to start
                     """
 
-                    // 5️⃣ Query /status endpoint via port-forward
+                    // 5️⃣ Query /sendpoint via port-forward
                     def appStatus = sh(
-                        script: "curl -s http://localhost:${LOCAL_PORT}/status",
+                        script: "curl -s http://localhost:${LOCAL_PORT}/",
                         returnStdout: true
                     ).trim()
 
@@ -63,7 +63,7 @@ pipeline {
                     ===== Failing Main Pods =====
                     ${failingMainPods}
 
-                    ===== Main App /status Endpoint =====
+                    ===== Main App / Endpoint =====
                     ${appStatus}
                     """
                 }
