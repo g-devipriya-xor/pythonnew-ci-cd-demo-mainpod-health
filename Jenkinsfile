@@ -11,10 +11,6 @@ pipeline {
         POD_NAME = ""         // will be set dynamically
     }
 
-    triggers {
-        cron('23 11 * * *') // daily at 9:00 AM
-    }
-
     stages {
         stage('Check Main Pod Health') {
             steps {
