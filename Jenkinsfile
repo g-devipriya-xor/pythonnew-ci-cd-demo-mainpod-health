@@ -17,7 +17,7 @@ pipeline {
                 script {
                     echo "Checking main branch pod health..."
 
-                    // 1️⃣ Get the main pod name
+                    // Get the main pod name
                     POD_NAME = sh(
                         script: "kubectl get pods -l app=${IMAGE_NAME}-${MAIN_BRANCH} -o jsonpath='{.items[0].metadata.name}'",
                         returnStdout: true
@@ -25,37 +25,37 @@ pipeline {
 
                     echo "Main pod: ${POD_NAME}"
 
-                    // 2️⃣ Get pod status
+                    // Get pod status
                     def mainPodStatus = sh(
                         script: "kubectl get pod ${POD_NAME} -o wide",
                         returnStdout: true
                     ).trim()
 
-                    // 3️⃣ Get failing pods (if any)
+                    //Get failing pods (if any)
                     def failingMainPods = sh(
                         script: "kubectl get pods -l app=${IMAGE_NAME}-${MAIN_BRANCH} --field-selector=status.phase!=Running",
                         returnStdout: true
                     ).trim()
 
-                    // 4️⃣ Start port-forward in background
+                    //Start port-forward in background
                     sh """
                     kubectl port-forward ${POD_NAME} ${LOCAL_PORT}:5001 &
                     PF_PID=\$!
-                    sleep 5  # give it some time to start
+                    sleep 5  
                     """
 
-                    // 5️⃣ Query /sendpoint via port-forward
+                    // Query /sendpoint via port-forward
                     def appStatus = sh(
                         script: "curl -s http://localhost:${LOCAL_PORT}/",
                         returnStdout: true
                     ).trim()
 
-                    // 6️⃣ Kill port-forward process
+                    //Kill port-forward process
                     sh """
                     kill \$PF_PID || true
                     """
 
-                    // 7️⃣ Save report
+                    // Save report
                     writeFile file: 'main_pod_health_report.txt', text: """
                     ===== Main Pod Status =====
                     ${mainPodStatus}
@@ -80,7 +80,7 @@ pipeline {
                     <p>Hello Team,</p>
                     <p>Here is the daily health report for the <b>Main Branch</b> deployment:</p>
                     <pre>${readFile('main_pod_health_report.txt')}</pre>
-                    <p>Regards,<br>Jenkins</p>
+                    <p>Regards,<br>Devipriya</p>
                     """,
                     mimeType: 'text/html'
                 )
