@@ -74,7 +74,7 @@ pipeline {
             steps {
                 emailext(
                     to: "${NOTIFY_EMAIL}",
-                    #cc: "${CC_EMAILS}",
+                    //cc: "${CC_EMAILS}",
                     subject: "Daily Main Branch Pod Health Report",
                     body: """
                     <p>Hello Team,</p>
