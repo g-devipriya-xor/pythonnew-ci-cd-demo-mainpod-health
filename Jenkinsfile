@@ -49,6 +49,11 @@ pipeline {
                         script: "curl -s http://localhost:${LOCAL_PORT}/",
                         returnStdout: true
                     ).trim()
+		    // Get /status endpoint status
+		    def appStatusEndpoint = sh(
+			script: "curl -s http://localhost:5001/status",
+			returnStdout: true
+		    ).trim()
 
                     //Kill port-forward process
                     sh """
@@ -57,14 +62,17 @@ pipeline {
 
                     // Save report
                     writeFile file: 'main_pod_health_report.txt', text: """
-                    ===== Main Pod Status =====
+                         Main Pod Status 
                     ${mainPodStatus}
 
-                    ===== Failing Main Pods =====
+                     Failing Main Pods 
                     ${failingMainPods}
 
-                    ===== Main App / Endpoint =====
+                     Main App / Endpoint 
                     ${appStatus}
+
+		     Main App /status Endpoint
+		     ${appStatusEndpoint}
                     """
                 }
             }
