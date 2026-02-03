@@ -80,17 +80,20 @@ pipeline {
 
         stage('Send Email Report') {
             steps {
-                emailext(
-                    to: "${NOTIFY_EMAIL},${CC_EMAILS}",
-                    subject: "Daily Main Branch Pod Health Report",
-                    body: """
-                    <p>Hello Team,</p>
-                    <p>Here is the daily health report for the <b>Main Branch</b> deployment:</p>
-                    <pre>${readFile('main_pod_health_report.txt')}</pre>
-                    <p>Regards,<br>Devipriya</p>
-                    """,
-                    mimeType: 'text/html'
-                )
+		script{
+			def recipients = "${NOTIFY_EMAIL},${CC_EMAILS}".replaceAll("\\s+", "")
+			emailext(
+				to: recipients,
+				subject: "Daily Main Branch Pod Health Report",
+				body: """
+				<p>Hello Team,</p>
+				<p>Here is the daily health report for the <b>Main Branch</b> deployment:</p>
+				<pre>${readFile('main_pod_health_report.txt')}</pre>
+				<p>Regards,<br>Devipriya</p>
+				""",
+				mimeType: 'text/html'
+				)
+			}
             }
         }
     }
