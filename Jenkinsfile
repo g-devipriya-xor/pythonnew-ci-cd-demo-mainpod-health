@@ -7,8 +7,8 @@ pipeline {
         NOTIFY_EMAIL = "G.Devipriya@Xoriant.Com"
         CC_EMAILS = "Ashish.Kamath@Xoriant.Com"
         MAIN_BRANCH = "main"
-        LOCAL_PORT = "5005"  // local port for port-forward
-        POD_NAME = ""         // will be set dynamically
+        LOCAL_PORT = "5005"  
+        POD_NAME = ""         
     }
 
     stages {
